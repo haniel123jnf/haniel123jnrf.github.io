@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amor Eterno</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fce4ec;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 350px;
+            position: relative;
+            z-index: 10;
+        }
+        .question {
+            font-size: 1.2em;
+            color: #d81b60;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin: 5px;
+            transition: transform 0.2s ease;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        button:hover:not(:disabled) {
+            transform: scale(1.05);
+        }
+        #love-note, #sure-note {
+            font-size: 1.1em;
+            color: #880e4f;
+            display: none;
+            background-color: #f8bbd0;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            line-height: 1.6em;
+        }
+        .falling {
+            position: absolute;
+            color: #d81b60;
+            animation: fall linear infinite;
+        }
+        .heart {
+            font-size: 1.5em;
+        }
+        .word {
+            font-size: 2em;
+            font-weight: bold;
+            font-family: 'Arial', sans-serif;
+            color: #880e4f;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-200px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="question">¿Me permites seguir amándote toda la vida?</div>
+        <button id="yes">Sí</button>
+        <button id="no">No</button>
+        <div id="love-note">
+            Eres la razón de mis sonrisas, mi fuerza en los días difíciles y la luz que ilumina mi vida.  
+            Te amo con todo mi corazón y prometo cuidarte, respetarte y amarte más cada día.  
+            Eres y siempre serás mi todo, mi amor eterno. 💖
+        </div>
+        <div id="sure-note">¿Segura?</div>
+    </div>
+
+    <script>
+        const words = [
+            'Te amo', 
+            'Eres mi todo', 
+            'Mi vida', 
+            'Eres mi sol', 
+            'Siempre contigo', 
+            'Te quiero más cada día', 
+            'Mi amor eterno', 
+            'Eres la razón de mi felicidad', 
+            'Nunca dejaré de amarte', 
+            'Mi razón de vivir'
+        ];
+
+        function createFallingElement(elementType, content) {
+            const fallingElement = document.createElement('div');
+            fallingElement.classList.add('falling');
+            fallingElement.textContent = content;
+            if (elementType === 'heart') {
+                fallingElement.classList.add('heart');
+            } else if (elementType === 'word') {
+                fallingElement.classList.add('word');
+            }
+            fallingElement.style.left = Math.random() * 100 + 'vw';
+            fallingElement.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(fallingElement);
+
+            // Eliminar el elemento después de que caiga
+            setTimeout(() => {
+                fallingElement.remove();
+            }, 5000);
+        }
+
+        document.getElementById('no').addEventListener('click', function() {
+            const sureNote = document.getElementById('sure-note');
+            sureNote.style.display = 'block';
+            setTimeout(() => {
+                sureNote.style.display = 'none';
+            }, 2000); // Mostrar "¿Segura?" por 2 segundos
+        });
+
+        document.getElementById('yes').addEventListener('click', function() {
+            document.getElementById('love-note').style.display = 'block';
+            setInterval(() => createFallingElement('heart', '💖'), 200); // Corazones
+
+            // Agregar más palabras que caen
+            setInterval(() => createFallingElement('word', words[Math.floor(Math.random() * words.length)]), 1500);
+            
+            document.getElementById('no').disabled = true; // Desactivar el botón "No"
+        });
+    </script>
+</body>
+</html>
